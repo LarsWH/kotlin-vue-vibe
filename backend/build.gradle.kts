@@ -15,6 +15,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.session:spring-session-jdbc")
     implementation("org.postgresql:postgresql")
     implementation("ch.qos.logback:logback-classic:1.4.14")
 }

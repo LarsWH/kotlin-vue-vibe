@@ -135,27 +135,27 @@ Create the project structure with empty files:
 
 Fill in the blanks....
 
-      docker compose build
-      docker compose up
-      docker compose down
-
+      docker compose down && docker volume rm kotlin-vue-vibe_db_data &&docker compose build && docker compose up -d && docker logs kotlin-vue-vibe-db-1 -f
+      docker logs kotlin-vue-vibe-frontend-1
+      docker logs kotlin-vue-vibe-backend-1
+      docker logs kotlin-vue-vibe-db-1
 
 # 3.0
-# kotlin-vue-vibe
+      # kotlin-vue-vibe
+      
+      ## 1. Register the Application with GitHub
+      
+      1. Go to [GitHub Developer Settings](https://github.com/settings/developers).
+         2. Click "New OAuth App".
+         3. Set:
+            - Application name: Your app name
+            - Homepage URL: `http://localhost:8080`
+            - Authorization callback URL: `http://localhost:8080/api/oauth2/callback/github`
+         4. Note the Client ID and Client Secret.
+         5. Create a `.env` file in the project root:
 
-## 1. Register the Application with GitHub
-
-1. Go to [GitHub Developer Settings](https://github.com/settings/developers).
-2. Click "New OAuth App".
-3. Set:
-   - Application name: Your app name
-   - Homepage URL: `http://localhost:8080`
-   - Authorization callback URL: `http://localhost:8080/api/oauth2/callback/github`
-4. Note the Client ID and Client Secret.
-5. Create a `.env` file in the project root:
-
-
-
+# 4.0
+how can i initially disable the login and just see things starting up
 
 
 

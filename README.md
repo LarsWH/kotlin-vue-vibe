@@ -213,6 +213,10 @@ how can i initially disable the login and just see things starting up
    cd ~/software/kotlin/kotlin-vue-vibe/backend/build
    sudo chown -R $USER:$USER .
 
+curl https://plugins.gradle.org/
+
+
+
 Here is a sample `README.md` section with instructions for your requirements. This assumes a project structure with a `backend` (Kotlin), `frontend` (Vue + TypeScript), and a `docker-compose.yml` at the root.
 
 ---

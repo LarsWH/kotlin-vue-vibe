@@ -133,6 +133,11 @@ Create the project structure with empty files:
       touch docker-compose.yml
       touch README.md
 
+## DB
+
+      docker compose up db -d
+
+
 Fill in the blanks....
 
       docker compose down && docker volume rm kotlin-vue-vibe_db_data && docker compose build && docker compose up -d && docker logs kotlin-vue-vibe-db-1 -f
@@ -205,7 +210,8 @@ how can i initially disable the login and just see things starting up
 # 5.0
 - add an integration test to the kotlin backend, that verifies a value can be written to the database and deleted again
 
-
+   cd ~/software/kotlin/kotlin-vue-vibe/backend/build
+   sudo chown -R $USER:$USER .
 
 Here is a sample `README.md` section with instructions for your requirements. This assumes a project structure with a `backend` (Kotlin), `frontend` (Vue + TypeScript), and a `docker-compose.yml` at the root.
 

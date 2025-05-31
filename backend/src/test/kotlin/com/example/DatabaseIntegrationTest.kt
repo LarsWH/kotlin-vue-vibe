@@ -10,13 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class DatabaseIntegrationTest @Autowired constructor(
+open class DatabaseIntegrationTest @Autowired constructor(
     val jdbcTemplate: JdbcTemplate
 ) {
     @Test
     @Transactional
-    fun `write and delete value in database`() {
-        assertEquals(0, 7)
+    open fun `write and delete value in database`() {
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS test_table (id SERIAL PRIMARY KEY, value TEXT)")
         val value = "test-value"
 

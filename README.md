@@ -135,10 +135,38 @@ Create the project structure with empty files:
 
 Fill in the blanks....
 
-      docker compose down && docker volume rm kotlin-vue-vibe_db_data &&docker compose build && docker compose up -d && docker logs kotlin-vue-vibe-db-1 -f
+      docker compose down && docker volume rm kotlin-vue-vibe_db_data && docker compose build && docker compose up -d && docker logs kotlin-vue-vibe-db-1 -f
+      docker compose down         && docker compose build         && docker compose up -d
+      docker compose down backend && docker compose build backend && docker compose up backend -d
+
+      docker compose down backend && docker compose build backend && docker compose up backend -d
+
+      docker compose down backend
+         docker ps
+      docker compose build backend
+      docker compose up backend -d
+         docker exec backend pwd
+         docker exec backend gradle --version
+         docker exec backend ls -al
+      docker exec backend gradle build --no-daemon --info --stacktrace
+         docker exec backend ls -al
+         docker exec backend find . -name *.jar
+         docker exec backend find / -name *.log
+      docker exec -d backend java -jar ./build/libs/app-0.0.1-SNAPSHOT.jar
+      docker logs -f backend
+
+      docker compose down backend && docker compose build backend && docker compose up backend -d
+      docker compose down backend && docker compose build backend && docker compose up backend -d
+      
       docker logs kotlin-vue-vibe-frontend-1
       docker logs kotlin-vue-vibe-backend-1
       docker logs kotlin-vue-vibe-db-1
+
+      curl http://localhost:8080/actuator
+      curl http://localhost:8080/actuator/mappings
+      curl http://localhost:8080/actuator/beans
+      curl http://localhost:8080/health
+
 
 # 3.0
       # kotlin-vue-vibe
@@ -158,6 +186,10 @@ Fill in the blanks....
 how can i initially disable the login and just see things starting up
 
 
+# So.....
+- Ensure actuator is running (curl http://localhost:8080/actuator/mappings)
+- Ensure health is running (curl http://localhost:8080/health)
+- Ensure volume mapping of the '~/.gradle/caches' for MUCH faster builds 
 
 
 

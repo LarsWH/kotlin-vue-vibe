@@ -2,6 +2,7 @@
 services:
   db:
 #    image: postgres:16
+    container_name: db
     build: ./db
     environment:
       POSTGRES_DB: demo
@@ -13,6 +14,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   backend:
+    container_name: backend
     build: ./backend
     environment:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
@@ -21,8 +23,12 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    volumes:
+      - ~/.gradle:/home/gradle/.gradle
+      - ./backend:/app
 
   frontend:
+    container_name: frontend
     build: ./frontend
     ports:
       - "5173:80"

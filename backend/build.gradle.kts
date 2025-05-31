@@ -19,8 +19,15 @@ dependencies {
     implementation("org.springframework.session:spring-session-jdbc")
     implementation("org.postgresql:postgresql")
     implementation("ch.qos.logback:logback-classic:1.4.14")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "17"
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

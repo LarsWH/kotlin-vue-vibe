@@ -149,6 +149,7 @@ Fill in the blanks....
          docker exec backend gradle --version
          docker exec backend ls -al
       docker exec backend gradle build --no-daemon --info --stacktrace
+      docker exec backend gradle build
          docker exec backend ls -al
          docker exec backend find . -name *.jar
          docker exec backend find / -name *.log
@@ -167,6 +168,15 @@ Fill in the blanks....
       curl http://localhost:8080/actuator/beans
       curl http://localhost:8080/health
 
+# Test
+
+      docker exec backend gradle test --warning-mode all
+      docker exec backend gradle build test --warning-mode all
+      docker exec backend gradle       test --tests com.example.DatabaseIntegrationTest --warning-mode all
+      docker exec backend gradle build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+      docker exec backend ls -al src/test/kotlin/com/example/DatabaseIntegrationTest.kt
+      docker exec backend gradle test --tests "com.example.DatabaseIntegrationTest"
+      docker exec backend gradle test --tests "com.example.DatabaseIntegrationTest.write and delete value in database"
 
 # 3.0
       # kotlin-vue-vibe
@@ -189,8 +199,11 @@ how can i initially disable the login and just see things starting up
 # So.....
 - Ensure actuator is running (curl http://localhost:8080/actuator/mappings)
 - Ensure health is running (curl http://localhost:8080/health)
-- Ensure volume mapping of the '~/.gradle/caches' for MUCH faster builds 
+- Ensure volume mapping of the '~/.gradle/caches' for faster builds
 
+
+# 5.0
+- add an integration test to the kotlin backend, that verifies a value can be written to the database and deleted again
 
 
 

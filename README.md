@@ -216,6 +216,20 @@ how can i initially disable the login and just see things starting up
 curl https://plugins.gradle.org/
 
 
+   cd ~/software/kotlin/kotlin-vue-vibe/backend
+   ./gradlew clean build
+
+
+
+
+
+
+# 5.1 Frontend
+Dockerfile:
+I want to use the same image for building and running.
+
+
+
 
 Here is a sample `README.md` section with instructions for your requirements. This assumes a project structure with a `backend` (Kotlin), `frontend` (Vue + TypeScript), and a `docker-compose.yml` at the root.
 

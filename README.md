@@ -168,10 +168,10 @@ Fill in the blanks....
       docker logs kotlin-vue-vibe-backend-1
       docker logs kotlin-vue-vibe-db-1
 
-      curl http://localhost:8080/actuator
-      curl http://localhost:8080/actuator/mappings
-      curl http://localhost:8080/actuator/beans
-      curl http://localhost:8080/health
+      curl http://localhost:8081/actuator
+      curl http://localhost:8081/actuator/mappings
+      curl http://localhost:8081/actuator/beans
+      curl http://localhost:8081/health
 
 # Test
 
@@ -219,17 +219,28 @@ curl https://plugins.gradle.org/
    cd ~/software/kotlin/kotlin-vue-vibe/backend
    ./gradlew clean build
 
+# 5.1
+After assigning port 8081 to tha backend, it can be started from the command line with:
+
+      ./gradlew clean build bootRun
+
+Alternatively try:
+
+      ./gradlew clean build bootRun --args='--server.port=8081'
 
 
 
 
 
-# 5.1 Frontend
+# 5.2 Frontend
 Dockerfile:
 I want to use the same image for building and running.
 
+# 5.2.1
+Running the frontend from IntelliJ...
 
 
+#
 
 Here is a sample `README.md` section with instructions for your requirements. This assumes a project structure with a `backend` (Kotlin), `frontend` (Vue + TypeScript), and a `docker-compose.yml` at the root.
 

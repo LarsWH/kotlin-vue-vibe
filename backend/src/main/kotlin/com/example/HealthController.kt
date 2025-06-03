@@ -11,6 +11,8 @@ class HealthController @Autowired constructor(
 ) {
     @GetMapping("/health")
     fun health(): Map<String, String> {
+        val logger = org.slf4j.LoggerFactory.getLogger(HealthController::class.java)
+        logger.info("########################## Health ##########################")
         return try {
             jdbcTemplate.queryForObject("SELECT 1", Int::class.java)
             mapOf("status" to "UP")

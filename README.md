@@ -189,17 +189,26 @@ Build without running the integration test with the DB
 Run the jar (dependencies first...)
 
     docker compose up backend
-    ...docker compose up backend -d
+
+    docker compose up backend -d
     docker logs backend
 
 Try curl locally
 
-    docker exec backend curl -I localhost:8081/health
+    docker exec backend  curl localhost:8082/health
+    docker exec backend  curl backend:8082/health
+    docker exec db       curl backend:8082/health
+    ...not installed...docker exec frontend curl backend:8082/health
+    curl localhost:8082/health
+    curl 127.0.0.1:8082/health
+
+    docker network ls
+
 
 
     ...docker compose up db -d
     ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app               backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar --server.port=8081'
-    ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app  -p 8081:8080 backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar'
+    ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app  -p 8082:8082 backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar'
 
     ...docker run --rm backend ls -al
 

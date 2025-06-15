@@ -174,27 +174,39 @@ Fill in the blanks....
 
 Clean
 
+    docker compose down backend
+    docker ps -a
     docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && rm build/libs/*.jar'
     docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ls -al build/libs/'
 
 Build without running the integration test with the DB
 
-    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew build -x test --no-daemon --info --stacktrace'
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
     docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ls -al build/libs/*.jar'
         -rw-r--r-- 1 root root 59224889 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT.jar
         -rw-r--r-- 1 root root     8849 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT-plain.jar
 
 Run the jar (dependencies first...)
 
-    docker compose up db -d
+    docker compose up backend
+    ...docker compose up backend -d
+    docker logs backend
+
+Try curl locally
+
+    docker exec backend curl -I localhost:8081/health
+
+
+    ...docker compose up db -d
     ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app               backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar --server.port=8081'
-    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app  -p 8081:8080 backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar'
+    ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app  -p 8081:8080 backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar'
 
-    docker run --rm backend ls -al
+    ...docker run --rm backend ls -al
 
-    docker run backend gradle build --no-daemon --info --stacktrace
-    docker exec backend ls -al ./build/libs/*.jar
-    docker exec backend ls -al ./build/libs/app-0.0.1-SNAPSHOT.jar
+    ...docker run backend gradle build --no-daemon --info --stacktrace
+    ...docker exec backend ls -al ./build/libs/*.jar
+    ...docker exec backend ls -al ./build/libs/app-0.0.1-SNAPSHOT.jar
+
 # Run the backend
 
 

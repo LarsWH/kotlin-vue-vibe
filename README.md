@@ -148,19 +148,99 @@ Fill in the blanks....
 
       docker compose down backend
          docker ps
+
+      ls -al ~/software/kotlin/kotlin-vue-vibe/backend/build/libs/*.jar
+      rm -f ~/software/kotlin/kotlin-vue-vibe/backend/build/libs/*.jar
       docker compose build backend
-      docker compose up backend -d
+      docker compose up -d backend
          docker exec backend pwd
          docker exec backend gradle --version
          docker exec backend ls -al
-      docker exec backend gradle build --no-daemon --info --stacktrace
+         docker exec backend gradle build --no-daemon --info --stacktrace
+      
+
+# Build docker images
+
+    cd ~/software/kotlin/kotlin-vue-vibe
+    docker compose build backend
+    docker run --rm backend:latest ls -al
+
+
+# Compiile the backend
+
+    docker run --rm backend:latest
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest ls -al /app
+    ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app &&    gradle build -x test --no-daemon --info --stacktrace'
+
+Clean
+
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && rm build/libs/*.jar'
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ls -al build/libs/'
+
+Build without running the integration test with the DB
+
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew build -x test --no-daemon --info --stacktrace'
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ls -al build/libs/*.jar'
+        -rw-r--r-- 1 root root 59224889 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT.jar
+        -rw-r--r-- 1 root root     8849 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT-plain.jar
+
+Run the jar (dependencies first...)
+
+    docker compose up db -d
+    ...docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app               backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar --server.port=8081'
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app  -p 8081:8080 backend:latest /bin/bash -c 'cd /app/build/libs/ && java -jar app-0.0.1-SNAPSHOT.jar'
+
+    docker run --rm backend ls -al
+
+    docker run backend gradle build --no-daemon --info --stacktrace
+    docker exec backend ls -al ./build/libs/*.jar
+    docker exec backend ls -al ./build/libs/app-0.0.1-SNAPSHOT.jar
+# Run the backend
+
+
       docker exec backend gradle build
+      docker exec backend gradle build bootRun
+      docker ps -a
+      docker exec backend ps -ax | grep ApplicationKt
+      You can check if anything is listening on port 8081 locally by running:
+
+      ```sh
+      lsof -i :8081
+      ```
+      or
+
+      ```sh
+      netstat -tuln | grep 8081
+      ```
+      or
+
+      ```sh
+      ss -tuln | grep 8081
+      ```
+      docker exec backend curl backend:8081/health
+      docker exec backend curl localhost:8081/health
+      docker exec backend curl 127.0.0.1:8081/health
+      docker exec backend curl http://localhost:8081/manager/html
+      docker exec backend lsof -i :8081
+      docker exec backend netstat -tuln | grep 808
+      docker exec backend netstat -tuln | grep 8081
+      docker exec backend netstat -tuln
+      docker exec backend /bin/bash -c 'apt-get update && apt-get install -y net-tools'
+
+      docker exec backend pkill -f ApplicationKt
+      docker exec db curl --version
+      docker exec db curl backend:8080/health
+      docker exec db curl backend:8081/health
+      docker exec db curl backend:8081/actuator
+
          docker exec backend ls -al
          docker exec backend find . -name *.jar
+         docker exec backend ls -al ./build/libs/*.jar
+         docker exec backend rm /app/build/libs/*.jar
          docker exec backend find / -name *.log
       docker exec -d backend java -jar ./build/libs/app-0.0.1-SNAPSHOT.jar
       docker logs -f backend
-
+health
       docker compose down backend && docker compose build backend && docker compose up backend -d
       docker compose down backend && docker compose build backend && docker compose up backend -d
       
@@ -171,7 +251,7 @@ Fill in the blanks....
       curl http://localhost:8081/actuator
       curl http://localhost:8081/actuator/mappings
       curl http://localhost:8081/actuator/beans
-      curl http://localhost:8081/health
+      curl http://localhost:8080/health
 
 # Test
 
@@ -237,6 +317,20 @@ Dockerfile:
 I want to use the same image for building and running.
 
 # 5.2.1
+Run frontend from CLI
+
+   cd ~/software/kotlin/kotlin-vue-vibe/frontend
+   npm install
+   npm run dev
+
+Opening http://localhost:5173/ shows "Hello Vue"
+
+
+
+
+
+
+# 5.2.2
 Running the frontend from IntelliJ...
 
 

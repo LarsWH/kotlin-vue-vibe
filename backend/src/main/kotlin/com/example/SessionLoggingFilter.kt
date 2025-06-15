@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpSession
 
 @Component
 class SessionLoggingFilter : Filter {
-    private val logger = LoggerFactory.getLogger(SessionLoggingFilter::class.java)
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
         val httpRequest = request as HttpServletRequest

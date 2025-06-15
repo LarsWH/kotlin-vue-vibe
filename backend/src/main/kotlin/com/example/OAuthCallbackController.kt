@@ -15,12 +15,14 @@
 //    @Value("\${GITHUB_CLIENT_SECRET}") private val clientSecret: String
 //) {
 //    private val restTemplate = RestTemplate()
+//    val logger = org.slf4j.LoggerFactory.getLogger(this::class.java)
 //
 //    @GetMapping("/login/oauth2/code/github")
 //    fun githubCallback(
 //        @RequestParam code: String,
 //        session: HttpSession
 //    ): RedirectView {
+//        logger.info("########################## Oauth 1 ##########################");
 //        // Exchange code for access token
 //        val tokenUrl = "https://github.com/login/oauth/access_token"
 //        val tokenRequest = mapOf(
@@ -33,6 +35,7 @@
 //        val request = HttpEntity(tokenRequest, headers)
 //        val tokenResponse = restTemplate.postForEntity(tokenUrl, request, Map::class.java)
 //        val accessToken = tokenResponse.body?.get("access_token") as? String
+//        logger.info("########################## Oauth 2 ##########################");
 //
 //        if (accessToken.isNullOrBlank()) {
 //            return RedirectView("/login?error")
@@ -49,12 +52,14 @@
 //            Map::class.java
 //        )
 //        val userInfo = userResponse.body
+//        logger.info("########################## Oauth 3 ##########################");
 //
 //        // Store user info and token in session
 //        session.setAttribute("GITHUB_USER", userInfo)
 //        session.setAttribute("GITHUB_TOKEN", accessToken)
 //
 //        // Redirect to home or dashboard
+//        logger.info("########################## Oauth 4 ##########################");
 //        return RedirectView("/")
 //    }
 //}

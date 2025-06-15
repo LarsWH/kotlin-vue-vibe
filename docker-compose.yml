@@ -16,7 +16,9 @@ services:
 
   backend:
     container_name: backend
-    build: ./backend
+    build:
+      context: ./backend
+    image: backend:latest
 #    user: "1000:1000"
     environment:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
@@ -28,6 +30,7 @@ services:
     volumes:
       - ~/.gradle:/home/gradle/.gradle
       - ./backend:/app
+    entrypoint: ["java", "-jar", "/app/build/libs/app-0.0.1-SNAPSHOT.jar"]
 
   frontend:
     container_name: frontend

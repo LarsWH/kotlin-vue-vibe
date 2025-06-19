@@ -24,12 +24,18 @@ jobs:
       - name: Verify Docker images exist
         run: |
           docker images
-          for image in kotlin-vue-vibe-backend kotlin-vue-vibe-frontend kotlin-vue-vibe-db; do
+          for image in backend frontend db; do
             if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^$image:"; then
               echo "Image $image not found!"
               exit 1
             fi
           done
+
+      - name: Verify curl is installed
+        run: |
+          docker run --rm backend  curl --version
+          docker run --rm frontend curl --version
+          docker run --rm db       curl --version
 
       - name: Compile backend using Docker image
         run: |

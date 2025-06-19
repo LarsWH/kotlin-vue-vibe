@@ -4,6 +4,7 @@ services:
 #    image: postgres:16
     container_name: db
     build: ./db
+    image: db:latest
 #    user: "1000:1000"
     environment:
       POSTGRES_DB: demo
@@ -39,6 +40,7 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend
+    image: frontend:latest
     user: "1000:1000"
     ports:
       - "5173:80"

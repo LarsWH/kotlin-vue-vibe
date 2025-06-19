@@ -35,7 +35,8 @@ services:
       - ./backend:/app
 #    networks:
 #      - demo-net
-    entrypoint: ["java", "-jar", "/app/build/libs/app-0.0.1-SNAPSHOT.jar"]
+#    entrypoint: ["java", "-jar", "/app/build/libs/app-0.0.1-SNAPSHOT.jar"]
+    entrypoint: ["tail", "-f", "/dev/null"]
 
   frontend:
     container_name: frontend

@@ -307,15 +307,40 @@ health
       curl http://localhost:8081/actuator/beans
       curl http://localhost:8080/health
 
-# Test
+# Test1
 
       docker exec backend gradle test --warning-mode all
       docker exec backend gradle build test --warning-mode all
       docker exec backend gradle       test --tests com.example.DatabaseIntegrationTest --warning-mode all
+      docker exec backend gradle       test --tests com.example.DatabaseIntegrationTest
       docker exec backend gradle build test --tests com.example.DatabaseIntegrationTest --warning-mode all
       docker exec backend ls -al src/test/kotlin/com/example/DatabaseIntegrationTest.kt
       docker exec backend gradle test --tests "com.example.DatabaseIntegrationTest"
       docker exec backend gradle test --tests "com.example.DatabaseIntegrationTest.write and delete value in database"
+
+# Test2
+
+      docker compose up db -d
+      docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew             test --tests com.example.DatabaseIntegrationTest --warning-mode all'
+      docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all'
+
+    docker compose up db -d
+    docker run --rm                                      -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
+
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app \
+-e SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/demo \
+-e SPRING_DATASOURCE_USERNAME=demo \
+-e SPRING_DATASOURCE_PASSWORD=demo \
+backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
+
+# Test3
+
+    docker compose down backend
+    docker compose up backend -d
+    docker exec backend gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+    docker exec backend /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all --rerun-tasks'
+
 
 # 3.0
       # kotlin-vue-vibe

@@ -10,9 +10,11 @@ spring:
 #    url: jdbc:postgresql://localhost:5432/demo
     username: demo
     password: demo
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
   jpa:
-    hibernate:
-      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 management:
   endpoints:

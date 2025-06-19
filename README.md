@@ -186,6 +186,39 @@ Build without running the integration test with the DB
         -rw-r--r-- 1 root root 59224889 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT.jar
         -rw-r--r-- 1 root root     8849 Jun 15 19:41 build/libs/app-0.0.1-SNAPSHOT-plain.jar
 
+Build using the docker-compose:
+    
+    docker ps
+    docker compose run --rm backend /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace' 
+    docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
+
+
+    ls -al  ~/.gradle/caches/journal-1/journal-1.lock
+    ls -al  ~/.gradle/caches/8.13/fileHashes/fileHashes.lock
+    docker ps
+    rm -f ~/.gradle/caches/journal-1/journal-1.lock
+    rm -f ~/.gradle/caches/8.13/fileHashes/fileHashes.lock
+
+
+    docker compose run --rm --entrypoint "" backend /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace' 
+    docker compose run --rm --entrypoint "" backend /bin/bash -c 'cd /app && ./gradlew clean build -x test' 
+    ...docker compose run --rm backend /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
+
+# Start the backend image - then comppile
+    docker ps
+    docker compose down
+    docker compose run --rm --entrypoint "tail -f /dev/null" backend
+
+
+
+
+
+
+    docker compose up backend -d --entrypoint "" 
+    docker ps -a
+    docker exec backend ls -al ./build/libs/*.jar
+    docker exec backend ls -al ./build/libs/app-0.0.1-SNAPSHOT.jar
+    
 Run the jar (dependencies first...)
 
     docker compose up backend

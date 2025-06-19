@@ -1,0 +1,35 @@
+name: My Ci Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show Docker and Compose versions
+        run: |
+          docker --version
+          docker compose version
+          docker info
+
+      - name: Build Docker Compose services
+        run: docker compose build
+
+      - name: Verify Docker images exist
+        run: |
+          for image in backend frontend db; do
+            if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^$image:"; then
+              echo "Image $image not found!"
+              exit 1
+            fi
+          done
+
+      - name: Compile backend using Docker image
+        run: |
+          docker run --rm -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'

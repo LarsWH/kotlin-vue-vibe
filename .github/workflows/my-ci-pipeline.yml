@@ -40,3 +40,37 @@ jobs:
       - name: Compile backend using Docker image
         run: |
           docker run --rm -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
+          ls -al
+          ls -al backend/
+          ls -al backend/build/
+          ls -al backend/build/libs/
+
+      - name: Fail if no JAR file is generated
+        run: |
+          if ! ls backend/build/libs/*.jar 1>/dev/null 2>&1; then
+            echo "No JAR file found in backend/build/libs/"
+            exit 1
+          fi
+
+      - name: Start Docker Compose services
+        run: |
+          docker compose up -d
+          docker ps --filter "name=backend" --filter "name=frontend" --filter "name=db"
+
+      - name: Verify backend health endpoint
+        run: |
+          for i in {1..10}; do
+            if docker exec backend curl -s http://localhost:8082/health | grep -q '"status":"UP"'; then
+              echo "Backend health is OK"
+              exit 0
+            else
+              echo "Waiting for backend to be healthy..."
+              sleep 3
+            fi
+          done
+          echo "Backend health check failed"
+          exit 1
+
+      - name: Verify backend health endpoint
+        run: |
+          curl -s http://localhost:8082/health | grep -q '"status":"UP"'

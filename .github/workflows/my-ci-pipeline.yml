@@ -23,7 +23,8 @@ jobs:
 
       - name: Verify Docker images exist
         run: |
-          for image in backend frontend db; do
+          docker images
+          for image in kotlin-vue-vibe-backend kotlin-vue-vibe-frontend kotlin-vue-vibe-db; do
             if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^$image:"; then
               echo "Image $image not found!"
               exit 1

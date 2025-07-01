@@ -57,6 +57,17 @@ jobs:
           docker compose up -d
           docker ps --filter "name=backend" --filter "name=frontend" --filter "name=db"
 
+      - name: Keep it simple
+        run: |
+          sleep 5
+          docker ps
+          docker exec backend curl -s http://localhost:8082/health
+
+      - name: Keep it simple - host
+        run: |
+          docker ps
+          curl -s http://localhost:8082/health
+
       - name: Verify backend health endpoint
         run: |
           for i in {1..10}; do

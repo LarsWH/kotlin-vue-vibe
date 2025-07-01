@@ -335,7 +335,7 @@ health
 -e SPRING_DATASOURCE_PASSWORD=demo \
 backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
 
-# Test3 2025.07.01 
+# Test3.1 2025.07.01 
 
     docker ps
     docker compose down backend
@@ -344,6 +344,18 @@ backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.Data
     docker exec backend                             gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
     docker exec backend                          ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
     docker exec backend /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all --rerun-tasks'
+
+# Test3.2 2025.07.01
+
+    docker ps
+    docker compose down
+    docker compose -f docker-compose.yml up --force-recreate --build -d
+    docker ps
+    docker logs backend
+    docker logs frontend
+    docker logs db
+    docker exec backend curl -s http://localhost:8082/health
+
 
 
 # 3.0

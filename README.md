@@ -190,6 +190,7 @@ Build using the docker-compose:
     
     docker ps
     docker compose run --rm backend /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace' 
+    BACKEND_ENTRYPOINT='["tail", "-f", "/dev/null"]'    docker compose run --rm backend /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
     docker run --rm -v $PWD/.gradle:/home/gradle/.gradle -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'
 
 
@@ -334,11 +335,14 @@ health
 -e SPRING_DATASOURCE_PASSWORD=demo \
 backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
 
-# Test3
+# Test3 2025.07.01 
 
+    docker ps
     docker compose down backend
-    docker compose up backend -d
-    docker exec backend gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+    docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+    docker exec backend                             gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+    docker exec backend                          ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
     docker exec backend /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all --rerun-tasks'
 
 

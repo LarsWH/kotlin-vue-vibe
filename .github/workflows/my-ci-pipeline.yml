@@ -59,7 +59,7 @@ jobs:
 
       - name: Keep it simple
         run: |
-          sleep 5
+          sleep 15
           docker ps
           docker exec backend curl -s http://localhost:8082/health
 

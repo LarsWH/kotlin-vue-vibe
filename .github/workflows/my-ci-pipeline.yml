@@ -62,33 +62,35 @@ jobs:
         run: |
           sleep 15
           docker ps
-          docker exec backend curl -s http://localhost:8082/health
+          docker exec backend curl -v http://localhost:8082/health
 
-#      - name: Health from the host machine
-#        run: |
-#          docker ps
-#          curl -s http://localhost:8082/health
-#
-#      - name: Verify backend health endpoint
-#        run: |
-#          for i in {1..10}; do
-#            docker exec backend curl -s http://localhost:8082/health
-#            if docker exec backend curl -s http://localhost:8082/health | grep -q '"status":"UP"'; then
-#              echo "Backend health is OK"
-#              exit 0
-#            else
-#              echo "Waiting for backend to be healthy..."
-#              sleep 3
-#            fi
-#          done
-#          echo "Backend health check failed"
-#          exit 1
+      - name: Health from the host machine
+        continue-on-error: true
+        run: |
+          docker ps
+          curl -v http://localhost:8082/health
+
+      - name: Verify backend health endpoint
+        continue-on-error: true
+        run: |
+          for i in {1..10}; do
+            docker exec backend curl -v http://localhost:8082/health
+            if docker exec backend curl -v http://localhost:8082/health | grep -q '"status":"UP"'; then
+              echo "Backend health is OK"
+              exit 0
+            else
+              echo "Waiting for backend to be healthy..."
+              sleep 3
+            fi
+          done
+          echo "Backend health check failed"
+          exit 1
 
       - name: Verify backend health endpoint
         continue-on-error: true
         run: |
           sleep 5
-          curl -s http://localhost:8082/health | grep -q '"status":"UP"'
+          curl -v http://localhost:8082/health | grep -q '"status":"UP"'
 
       - name: Run DB integration tests
         continue-on-error: true

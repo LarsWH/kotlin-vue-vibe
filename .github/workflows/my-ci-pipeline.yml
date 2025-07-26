@@ -86,4 +86,4 @@ jobs:
       - name: Verify backend health endpoint
         run: |
           curl -s http://localhost:8082/health
-          curl -s http://localhost:8082/health | grep -q '"status":"xUP"'
+          curl -s http://localhost:8082/health | grep -q '"status":"UP"'

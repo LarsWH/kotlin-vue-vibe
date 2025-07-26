@@ -82,8 +82,14 @@ jobs:
 #          done
 #          echo "Backend health check failed"
 #          exit 1
-#
+
       - name: Verify backend health endpoint
         run: |
-          curl -s http://localhost:8082/health
           curl -s http://localhost:8082/health | grep -q '"status":"UP"'
+
+      - name: Run DB integration tests
+        run: |
+          docker compose down backend
+          docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+          docker exec backend gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+          

@@ -62,7 +62,7 @@ jobs:
         run: |
           sleep 15
           docker ps
-          docker exec backend curl -s http://localhost:8082/health½
+          docker exec backend curl -s http://localhost:8082/health
 
 #      - name: Health from the host machine
 #        run: |
@@ -87,6 +87,7 @@ jobs:
       - name: Verify backend health endpoint
         continue-on-error: true
         run: |
+          sleep 5
           curl -s http://localhost:8082/health | grep -q '"status":"UP"'
 
       - name: Run DB integration tests

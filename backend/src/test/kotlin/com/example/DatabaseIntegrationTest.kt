@@ -25,7 +25,7 @@ open class DatabaseIntegrationTest @Autowired constructor(
             "SELECT COUNT(*) FROM test_table WHERE value = ?",
             Int::class.java, value
         )
-        assertEquals(11, count)
+        assertEquals(1, count)
 
         // Delete value
         jdbcTemplate.update("DELETE FROM test_table WHERE value = ?", value)

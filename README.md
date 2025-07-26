@@ -335,17 +335,17 @@ health
 -e SPRING_DATASOURCE_PASSWORD=demo \
 backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.DatabaseIntegrationTest --warning-mode all'
 
-# Test3.1 2025.07.01 
+# Test3.1 2025.07.01 - Run integration test
 
     docker ps
     docker compose down backend
     docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
 
     docker exec backend                             gradle clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
-    docker exec backend                          ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
-    docker exec backend /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all --rerun-tasks'
+        docker exec backend                          ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all
+        docker exec backend /bin/bash -c 'cd /app && ./gradlew clean build test --tests com.example.DatabaseIntegrationTest --warning-mode all --rerun-tasks'
 
-# Test3.2 2025.07.01
+# Test3.2 2025.07.01 - Run health check
 
     docker ps
     docker compose down
@@ -355,6 +355,34 @@ backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.Data
     docker logs frontend
     docker logs db
     docker exec backend curl -s http://localhost:8082/health
+
+# Test3.3 2025.07.26 - Run integration test against DB running in docker
+
+Make the .gradle directory writable by the current user, so that gradle can write to it
+
+    sudo chown -R $USER:$USER .gradle
+    sudo chown -R $USER:$USER backend/build
+
+Establish the DB connection within Idea, and verify that <Test> is working:
+
+    username: demo
+    password: demo
+    database: demo  
+    host: localhost
+    port: 5432
+
+    jdbc:postgresql://localhost:5432/demo
+
+Add file: application-idea.yml
+Change the server from 'db' to 'localhost'
+Add this to the DatabaseIntegrationTest.kt: @ActiveProfiles("idea")
+
+
+
+
+
+
+
 
 
 

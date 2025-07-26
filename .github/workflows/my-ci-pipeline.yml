@@ -62,12 +62,18 @@ jobs:
         run: |
           sleep 15
           docker ps
+          echo "------------------------ logs ------------------------"
+          docker logs backend
+          echo "------------------------ curl ------------------------"
           docker exec backend curl -v http://localhost:8082/health
 
       - name: Health from the host machine
         continue-on-error: true
         run: |
           docker ps
+          echo "------------------------ logs ------------------------"
+          docker logs backend
+          echo "------------------------ curl ------------------------"
           curl -v http://localhost:8082/health
 
       - name: Verify backend health endpoint

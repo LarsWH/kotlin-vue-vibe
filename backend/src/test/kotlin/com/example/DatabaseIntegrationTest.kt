@@ -33,6 +33,6 @@ open class DatabaseIntegrationTest @Autowired constructor(
             "SELECT COUNT(*) FROM test_table WHERE value = ?",
             Int::class.java, value
         )
-        assertEquals(10, countAfterDelete)
+        assertEquals(0, countAfterDelete)
     }
 }

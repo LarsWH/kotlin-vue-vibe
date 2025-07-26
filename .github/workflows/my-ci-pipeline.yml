@@ -58,7 +58,7 @@ jobs:
           docker ps --filter "name=backend" --filter "name=frontend" --filter "name=db"
 
       - name: Health from backend container itself (after sleeping 15s)
-        continue-on-error: true
+#        continue-on-error: true
         run: |
           sleep 15
           docker ps
@@ -68,7 +68,7 @@ jobs:
           docker exec backend curl -v http://localhost:8082/health
 
       - name: Health from the host machine
-        continue-on-error: true
+#        continue-on-error: true
         run: |
           docker ps
           echo "------------------------ logs ------------------------"
@@ -77,7 +77,7 @@ jobs:
           curl -v http://localhost:8082/health
 
       - name: Verify backend health endpoint
-        continue-on-error: true
+#        continue-on-error: true
         run: |
           for i in {1..10}; do
             docker exec backend curl -v http://localhost:8082/health
@@ -93,13 +93,13 @@ jobs:
           exit 1
 
       - name: Verify backend health endpoint
-        continue-on-error: true
+#        continue-on-error: true
         run: |
           sleep 5
           curl -v http://localhost:8082/health | grep -q '"status":"UP"'
 
       - name: Run DB integration tests
-        continue-on-error: true
+#        continue-on-error: true
         run: |
           docker compose down backend
           docker compose -f docker-compose.yml -f docker-compose.override.yml up -d

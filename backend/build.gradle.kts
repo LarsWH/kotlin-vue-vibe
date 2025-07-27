@@ -38,10 +38,12 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-security")
 //    implementation("org.slf4j:slf4j-api:2.0.7")              // Logging facade
 //    implementation("ch.qos.logback:logback-classic:1.4.14")
+
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+//    implementation("io.github.oshai:kotlin-logging-jvm")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

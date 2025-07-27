@@ -1,0 +1,42 @@
+server:
+  port: 8082
+  address: 0.0.0.0
+
+spring:
+#  security:
+#    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo
+    username: demo
+    password: demo
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          github:
+#            client-id: ${GITHUB_CLIENT_ID}
+#            client-secret: ${GITHUB_CLIENT_SECRET}
+#            scope: user:email
+#            redirect-uri: "{baseUrl}/api/oauth2/callback/github"
+#        provider:
+#          github:
+#            authorization-uri: https://github.com/login/oauth/authorize
+#            token-uri: https://github.com/login/oauth/access_token
+#            user-info-uri: https://api.github.com/user
+#            user-name-attribute: login
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG

@@ -35,10 +35,10 @@ dependencies {
 //    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.21")
     implementation("org.springframework.session:spring-session-jdbc")
     implementation("org.postgresql:postgresql")
-    implementation("ch.qos.logback:logback-classic:1.4.14")
 //    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.slf4j:slf4j-api:2.0.7")              // Logging facade
-    implementation("ch.qos.logback:logback-classic:1.4.14")
+//    implementation("org.slf4j:slf4j-api:2.0.7")              // Logging facade
+//    implementation("ch.qos.logback:logback-classic:1.4.14")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")

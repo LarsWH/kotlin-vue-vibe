@@ -428,7 +428,7 @@ It not, start it:
     cd ~/software/kotlin/kotlin-vue-vibe
     docker compose up db -d
 
-Test
+Test from cli
 
     cd ~/software/kotlin/kotlin-vue-vibe/backend
     ./gradlew clean build --no-daemon --info --stacktrace --rerun-tasks -Dspring.profiles.active=local
@@ -436,6 +436,15 @@ Test
         BUILD SUCCESSFUL in 24s
         9 actionable tasks: 9 executed
 
+Test from IDEA (run configuration)
+
+"Gradle style"
+    Name: DatabaseIntegrationTest
+    Run on: Local machine
+    Run  :test --tests "com.example.DatabaseIntegrationTest"
+    Gradle project: backend
+    Environment variables:
+    VM options: -Dspring.profiles.active=local
 
 
 

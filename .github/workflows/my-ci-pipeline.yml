@@ -42,9 +42,9 @@ jobs:
           docker run --rm -v $PWD/backend:/app backend:latest gradle --version     
           docker run --rm -v $PWD/backend:/app backend:latest ./gradlew --version     
           docker run --rm -v $PWD/backend:/app backend:latest java --version
-        # Gradle 7.2
-        # Gradle 8.13
-        # openjdk 17.0.14 2025-01-21
+        # Gradle 7.2 local, 8.5 docker
+        # Gradle 8.13 local and docker
+        # openjdk 17.0.14 2025-01-21 local, openjdk 17.0.10 2024-01-16 docker
 
       - name: Compile backend using Docker image
         run: |

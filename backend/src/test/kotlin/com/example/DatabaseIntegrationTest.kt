@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.core.env.Environment
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory
 open class DatabaseIntegrationTest @Autowired constructor(
     val jdbcTemplate: JdbcTemplate
 ) {
-    val logger = LoggerFactory.getLogger(Application::class.java)
+    val logger = KotlinLogging.logger { }
 
 
 //    @Autowired
@@ -34,7 +34,7 @@ open class DatabaseIntegrationTest @Autowired constructor(
     @Test
     @Transactional
     open fun `write and delete value in database`() {
-        logger.error("########################## Test ##########################")
+        logger.error{"########################## Test ##########################"}
 
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS test_table (id SERIAL PRIMARY KEY, value TEXT)")
         val value = "test-value"

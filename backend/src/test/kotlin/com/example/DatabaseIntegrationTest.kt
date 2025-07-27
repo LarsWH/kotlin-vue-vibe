@@ -8,16 +8,34 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.core.env.Environment
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@ActiveProfiles("idea")
+//@ActiveProfiles("local")
 open class DatabaseIntegrationTest @Autowired constructor(
     val jdbcTemplate: JdbcTemplate
 ) {
+    val logger = LoggerFactory.getLogger(Application::class.java)
+
+
+    @Autowired
+    lateinit var env: Environment
+
+    @Test
+    fun printProfile() {
+        logger.error("########################## Test ##########################")
+        assertEquals("local","${env.activeProfiles.joinToString()}")
+    }
+
     @Test
     @Transactional
     open fun `write and delete value in database`() {
+        logger.error("########################## Test ##########################")
+
         jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS test_table (id SERIAL PRIMARY KEY, value TEXT)")
         val value = "test-value"
 

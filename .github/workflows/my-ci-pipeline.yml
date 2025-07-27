@@ -37,6 +37,15 @@ jobs:
           docker run --rm frontend curl --version
           docker run --rm db       curl --version
 
+      - name: Check versions inside Docker image
+        run: |
+          docker run --rm -v $PWD/backend:/app backend:latest gradle --version     
+          docker run --rm -v $PWD/backend:/app backend:latest ./gradlew --version     
+          docker run --rm -v $PWD/backend:/app backend:latest java --version
+        # Gradle 7.2
+        # Gradle 8.13
+        # openjdk 17.0.14 2025-01-21
+
       - name: Compile backend using Docker image
         run: |
           docker run --rm -v $PWD/backend:/app backend:latest /bin/bash -c 'cd /app && ./gradlew clean build -x test --no-daemon --info --stacktrace'

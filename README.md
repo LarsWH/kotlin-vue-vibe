@@ -356,12 +356,55 @@ backend:latest  /bin/bash -c 'cd /app && ./gradlew test --tests com.example.Data
     docker logs db
     docker exec backend curl -s http://localhost:8082/health
 
-# Test3.3 2025.07.26 - Run integration test against DB running in docker
+# Test3.3 2025.07.26 - Run integration test from IDEA against DB running in docker
+
+Version checks
+
+    java --version
+        openjdk 17.0.14 2025-01-21
+
+    gradle --version
+        ------------------------------------------------------------
+        Gradle 7.2
+        ------------------------------------------------------------
+        Build time:   2021-08-17 09:59:03 UTC
+        Revision:     a773786b58bb28710e3dc96c4d1a7063628952ad
+        Kotlin:       1.5.21
+        Groovy:       3.0.8
+        Ant:          Apache Ant(TM) version 1.10.9 compiled on September 27 2020
+        JVM:          16.0.1 (Private Build 16.0.1+9-Ubuntu-120.04)
+        OS:           Linux 5.15.167.4-microsoft-standard-WSL2 amd64
+
+    ./gradlew --version
+        ------------------------------------------------------------
+        Gradle 8.13
+        ------------------------------------------------------------
+        Build time:   2024-10-01 11:59:59 UTC
+        Revision:     1a2b3c4d5e6f7890abcdef1234567890abcdef12
+        Kotlin:       1.9.10
+        Groovy:       3.0.9
+        Ant:          Apache Ant(TM) version 1.10.12 compiled on June 15 2023
+        JVM:          21 (Oracle Corporation 21+35-2512)
+        OS:           Linux
 
 Make the .gradle directory writable by the current user, so that gradle can write to it
 
     sudo chown -R $USER:$USER .gradle
     sudo chown -R $USER:$USER backend/build
+
+Build without integration test (./gradlew)
+
+    cd ~/software/kotlin/kotlin-vue-vibe/backend
+    ./gradlew clean build -x test
+        ./gradlew clean build -x test --no-daemon --info --stacktrace
+    ls -al build/libs/*.jar
+
+Build with integration test (gradle)
+
+    cd ~/software/kotlin/kotlin-vue-vibe/backend
+    gradle clean build -x test
+
+This fails, and the recommendation from ChatGPT is to always use ./gradlew!!!
 
 Establish the DB connection within Idea, and verify that <Test> is working:
 
@@ -375,11 +418,23 @@ Establish the DB connection within Idea, and verify that <Test> is working:
 
 Add file: application-idea.yml
 Change the server from 'db' to 'localhost'
-Add this to the DatabaseIntegrationTest.kt: @ActiveProfiles("idea")
+Temporarily add this to the DatabaseIntegrationTest.kt: @ActiveProfiles("idea")
+Ensure the db is running:
 
+    docker ps
 
+It not, start it:
 
+    cd ~/software/kotlin/kotlin-vue-vibe
+    docker compose up db -d
 
+Test
+
+    cd ~/software/kotlin/kotlin-vue-vibe/backend
+    ./gradlew clean build --no-daemon --info --stacktrace --rerun-tasks -Dspring.profiles.active=local
+        .........
+        BUILD SUCCESSFUL in 24s
+        9 actionable tasks: 9 executed
 
 
 

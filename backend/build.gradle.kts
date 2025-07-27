@@ -7,11 +7,14 @@
 
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+//    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.1.0"
 // https://mvnrepository.com/artifact/org.jetbrains.kotlin.jvm/org.jetbrains.kotlin.jvm.gradle.plugin
 //    id("org.jetbrains.kotlin.jvm") version "1.9.23"
-    id("org.springframework.boot") version "3.2.6"
+//    id("org.springframework.boot") version "3.2.6"
+    id("org.springframework.boot") version "3.3.0"
     id("io.spring.dependency-management") version "1.1.4"
+    kotlin("plugin.spring") version "2.1.0"
 }
 
 group = "com.example"
@@ -34,6 +37,8 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("ch.qos.logback:logback-classic:1.4.14")
 //    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.slf4j:slf4j-api:2.0.7")              // Logging facade
+    implementation("ch.qos.logback:logback-classic:1.4.14")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
@@ -45,4 +50,5 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("spring.profiles.active", System.getProperty("spring.profiles.active"))
 }

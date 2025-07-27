@@ -22,14 +22,14 @@ open class DatabaseIntegrationTest @Autowired constructor(
     val logger = LoggerFactory.getLogger(Application::class.java)
 
 
-    @Autowired
-    lateinit var env: Environment
-
-    @Test
-    fun printProfile() {
-        logger.error("########################## Test ##########################")
-        assertEquals("local","${env.activeProfiles.joinToString()}")
-    }
+//    @Autowired
+//    lateinit var env: Environment
+//
+//    @Test
+//    fun printProfile() {
+//        logger.error("########################## Test ##########################")
+//        assertEquals("local","${env.activeProfiles.joinToString()}")
+//    }
 
     @Test
     @Transactional

@@ -447,8 +447,18 @@ Test from IDEA (run configuration)
     VM options: -Dspring.profiles.active=local
 
 
+# Frontend
 
+    cd ~/software/kotlin/kotlin-vue-vibe/frontend
+    npm --version
+        10.7.0
+    npm install
+    npm run preview
+    http://localhost:5173/
 
+# New endponit in backene
+
+curl -X POST http://localhost:8082/api/button-click -H "Content-Type: application/json" -d "{\"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)\"}"
 
 # 3.0
       # kotlin-vue-vibe

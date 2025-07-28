@@ -456,9 +456,13 @@ Test from IDEA (run configuration)
     npm run preview
     http://localhost:5173/
 
-# New endponit in backene
+# New endpoint in backene (button-click)
 
-curl -X POST http://localhost:8082/api/button-click -H "Content-Type: application/json" -d "{\"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)\"}"
+    curl -i -X POST http://localhost:8082/api/button-click -H "Content-Type: application/json" -d "{\"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)\"}"
+    curl -i -X GET http://localhost:8082/health
+    curl -i -X GET http://localhost:8082/actuator/mappings
+
+# After enabling security, only the health and actuator/mappings are allowed through the filter (200 OK). The button-click returns 401
 
 # 3.0
       # kotlin-vue-vibe

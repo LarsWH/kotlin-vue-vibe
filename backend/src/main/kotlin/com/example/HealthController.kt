@@ -2,6 +2,7 @@ package com.example
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -10,6 +11,7 @@ class HealthController @Autowired constructor(
     private val jdbcTemplate: JdbcTemplate
 ) {
     @GetMapping("/health")
+    @CrossOrigin(origins = ["http://localhost:5173"])
     fun health(): Map<String, String> {
         val logger = org.slf4j.LoggerFactory.getLogger(HealthController::class.java)
         logger.info("########################## Health ##########################")

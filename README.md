@@ -1,3 +1,31 @@
+# Features
+- Docker-compose based demo project with:
+  - PostgreSQL database
+  - Kotlin backend with Spring Boot
+  - Vue.js frontend with TypeScript
+
+- Development
+  - Running locally with Docker
+  - Intellij IDEA for Kotlin backend development
+  - Github Actions Build pipeline
+
+- Backend:
+  - OAuth2 authentication (with GitHub)
+  - REST API for communication between frontend and backend
+  - Logging with KotlinLogging
+  
+    - Unit tests and integration tests for the backend
+    - SonarCloud integration for code quality checks
+    - Dockerfile for building the application
+    - Dockerfile for the frontend
+    - Dockerfile for the backend
+    - README.md with instructions for setup and deployment
+    - Sample data for testing purposes
+    - Basic UI for displaying user information and total number of users
+    - JWT-based session management for user login persistence
+    - Basic logging framework for both backend and frontend
+    - Build tool using Gradle for the backend
+  
 # kotlin-vue-vibe
 
 # 1

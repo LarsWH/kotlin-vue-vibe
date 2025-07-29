@@ -458,6 +458,7 @@ Test from IDEA (run configuration)
 
 # New endpoint in backene (button-click)
 
+    cd ~/software/kotlin/kotlin-vue-vibe/backend
     curl -i -X POST http://localhost:8082/api/button-click -H "Content-Type: application/json" -d "{\"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)\"}"
     curl -i -X GET http://localhost:8082/health
     curl -i -X GET http://localhost:8082/actuator/mappings

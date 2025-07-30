@@ -1,7 +1,7 @@
 # Features
 - Docker-compose based demo project with:
   - PostgreSQL database
-  - Kotlin backend with Spring Boot
+  - Kotlin (Gradle) backend with Spring Boot
   - Vue.js frontend with TypeScript
 
 - Development
@@ -13,7 +13,9 @@
   - OAuth2 authentication (with GitHub)
   - REST API for communication between frontend and backend
   - Logging with KotlinLogging
-  
+  - A timer is running to give a 'heart beat' in the console/logs
+
+- Miscellaneous:    
     - Unit tests and integration tests for the backend
     - SonarCloud integration for code quality checks
     - Dockerfile for building the application

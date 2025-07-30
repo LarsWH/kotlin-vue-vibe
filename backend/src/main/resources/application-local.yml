@@ -9,21 +9,21 @@ spring:
     password: demo
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          github:
-#            client-id: ${GITHUB_CLIENT_ID}
-#            client-secret: ${GITHUB_CLIENT_SECRET}
-#            scope: user:email
-#            redirect-uri: "{baseUrl}/login/oauth2/code/github"
-#        provider:
-#          github:
-#            authorization-uri: https://github.com/login/oauth/authorize
-#            token-uri: https://github.com/login/oauth/access_token
-#            user-info-uri: https://api.github.com/user
-#            user-name-attribute: login
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope: user:email
+            redirect-uri: "{baseUrl}/login/oauth2/code/github"
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: login
 
 management:
   endpoints:

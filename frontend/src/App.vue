@@ -1,10 +1,21 @@
 <template>
   <h1>Hello, Vue!</h1>
+
+  <div v-if="user.authenticated">
+    <p>Welcome, {{ user.username }}!</p>
+    <img :src="user.avatarUrl" alt="Avatar" style="width: 50px; height: 50px; border-radius: 25px;">
+  </div>
+  <div v-else>
+    <p>Not authenticated</p>
+  </div>
+
   <button @click="handleClick" :disabled="loading">Click Me!</button>
   <button @click="checkHealth" :disabled="healthLoading">Check Health</button>
+  <button @click="checkUser" :disabled="userLoading">Check User</button>
 
   <p v-if="loading">Loading...</p>
   <p v-if="healthLoading">Checking health...</p>
+  <p v-if="userLoading">Checking user...</p>
 
   <p v-if="buttonClicked">Button was clicked!</p>
   <p v-if="response">Backend response: {{ response }}</p>
@@ -14,7 +25,7 @@
 
 <script setup lang="ts">
 // You can add script logic here if needed
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import log from 'loglevel'
 
 const buttonClicked = ref(false)
@@ -23,6 +34,31 @@ const healthStatus = ref('')
 const error = ref('')
 const loading = ref(false)
 const healthLoading = ref(false)
+const userLoading = ref(false)
+const user = ref({ authenticated: false, username: null, avatarUrl: null })
+
+onMounted(() => {
+  checkUser()
+})
+
+const checkUser = async () => {
+  userLoading.value = true
+  try {
+    const res = await fetch('http://localhost:8082/api/user', {
+      credentials: 'include'
+    })
+
+    if (res.ok) {
+      const userData = await res.json()
+      user.value = userData
+      log.info('User data:', userData)
+    }
+  } catch (err) {
+    log.error('Failed to check user:', err)
+  } finally {
+    userLoading.value = false
+  }
+}
 
 const handleClick = async () => {
   console.log('handleClick function called')
@@ -56,7 +92,13 @@ const handleClick = async () => {
     log.info('Backend notified successfully')
   } catch (err) {
     log.error('Failed to notify backend:', err)
-    response.value = 'Error contacting backend'
+    // Check if the error is due to a redirect (which is expected for OAuth)
+    if (err instanceof TypeError && err.message.includes('Failed to fetch')) {
+      // This might be a redirect to OAuth, redirect the window
+      window.location.href = 'http://localhost:8082/oauth2/authorization/github'
+      return
+    }
+    error.value = 'Error contacting backend'
   } finally {
     loading.value = false
   }

@@ -11,7 +11,7 @@ class HealthController @Autowired constructor(
     private val jdbcTemplate: JdbcTemplate
 ) {
     @GetMapping("/health")
-    @CrossOrigin(origins = ["http://localhost:5173"])
+//    @CrossOrigin(origins = ["http://localhost:5173"], allowCredentials = "true")
     fun health(): Map<String, String> {
         val logger = org.slf4j.LoggerFactory.getLogger(HealthController::class.java)
         logger.info("########################## Health ##########################")

@@ -33,11 +33,19 @@ const handleClick = async () => {
   try {
     const res = await fetch('http://localhost:8082/api/button-click', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({timestamp: new Date().toISOString()})
     })
+
+    if (res.status === 401) {
+      // Redirect to OAuth login
+      window.location.href = 'http://localhost:8082/oauth2/authorization/github'
+      // window.location.href = 'http://localhost:8082/login/oauth2/code/github'
+      return
+    }
 
     if (!res.ok) {
       throw new Error(`Error ${res.status}: ${res.statusText}`)
